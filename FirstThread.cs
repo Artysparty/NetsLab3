@@ -37,6 +37,7 @@ namespace NetsReal3
             ConsoleHelper.WriteToConsole("1 поток", "Отправлен запрос на подключение");
 
             _sendSemaphore.Release();
+            
             _receiveSemaphore.WaitOne();
 
             ConsoleHelper.WriteToConsole("1 поток", "Получаю ответ");

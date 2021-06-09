@@ -22,26 +22,6 @@ namespace NetsReal3
             _post = (PostToThirdWT) obj;
             ConsoleHelper.WriteToConsole("4 поток", "Начинаю работу.");
 
-            _receiveSemaphore.WaitOne();
-
-            var frame = Frame.Parse(_receivedMessages[0]);
-
-            var controlBytes = new byte[2];
-            frame.Control.CopyTo(controlBytes, 0);
-
-            //200 - запрос на подключение, ответ 201, 
-            //иначе ответ 202, программа заканчивает работу
-            //30 - кадр с данными
-            //31 - квитанция о получении
-            //32 - квитанция об отсутствии или повреждении данных
-
-            if (controlBytes[0] == 200)
-            {
-                var resp = Utils.CreateTrueConnection();
-                _post(new[] {resp.ToBitArray()});
-                _sendSemaphore.Release();
-            }
-
             //обработка файла
             while (true)
             {
